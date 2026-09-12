@@ -290,6 +290,41 @@ function initCarousel() {
     }, 4000);
 }
 
+// Show/clear inline field errors
+function showFieldError(fieldId, message) {
+
+    clearFieldError(fieldId);
+
+    const field =
+        document.getElementById(fieldId);
+
+    field.classList.add("input-error");
+
+    const errorEl =
+        document.createElement("span");
+
+    errorEl.className = "field-error";
+    errorEl.id = fieldId + "Error";
+    errorEl.textContent = message;
+
+    field.insertAdjacentElement("afterend", errorEl);
+}
+
+function clearFieldError(fieldId) {
+
+    const field =
+        document.getElementById(fieldId);
+
+    field.classList.remove("input-error");
+
+    const existingError =
+        document.getElementById(fieldId + "Error");
+
+    if (existingError) {
+        existingError.remove();
+    }
+}
+
 // Form validation
 function validateForm(name, email, phone) {
 
@@ -299,22 +334,29 @@ function validateForm(name, email, phone) {
     const phonePattern =
         /^[0-9+\-\s()]{7,20}$/;
 
+    ["name", "email", "phone"].forEach(clearFieldError);
+
+    let isValid = true;
+
     if (!name.trim()) {
-        return false;
+        showFieldError("name", "Please enter your name.");
+        isValid = false;
     }
 
     if (!emailPattern.test(email)) {
-        return false;
+        showFieldError("email", "Please enter a valid email address.");
+        isValid = false;
     }
 
     if (
         phone &&
         !phonePattern.test(phone)
     ) {
-        return false;
+        showFieldError("phone", "Please enter a valid phone number.");
+        isValid = false;
     }
 
-    return true;
+    return isValid;
 }
 
 // Contact form

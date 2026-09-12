@@ -510,6 +510,18 @@ form button {
     border-radius: var(--radius);
 }
 
+.field-error {
+    display: block;
+    color: #ff4d4d;
+    font-size: 0.85rem;
+    margin: -10px 0 10px;
+}
+
+#contactForm input.input-error,
+#contactForm select.input-error {
+    border-color: #ff4d4d;
+}
+
 /* FOOTER */
 
 .footer {
